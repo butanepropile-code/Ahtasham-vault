@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahtasham Vault | The Ultimate Digital Vault</title>
+    <meta name="description" content="Ahtasham Vault - Your premium destination for Free Resources, Notes, Tools, and APKs. Join our growing community for the best digital assets.">
+    <meta name="keywords" content="Ahtasham Vault, digital vault, study material, productivity tools, creator resources, APK collection, learning guides">
+    <meta name="author" content="Ahtasham Vault">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ahtashamvault.com/">
+    <meta property="og:title" content="Ahtasham Vault | The Ultimate Digital Vault">
+    <meta property="og:description" content="Access premium resources, notes, and tools in one place.">
+    <meta property="og:image" content="https://ahtashamvault.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ahtashamvault.com/">
+    <meta property="twitter:title" content="Ahtasham Vault | The Ultimate Digital Vault">
+    <meta property="twitter:description" content="Access premium resources, notes, and tools in one place.">
+    <meta property="twitter:image" content="https://ahtashamvault.com/og-image.jpg">
+
+    <link rel="canonical" href="https://ahtashamvault.com/">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #050816;
+            --primary-gradient: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            --accent-color: #00d2ff;
+            --accent-glow: rgba(0, 210, 255, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1a202c;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loader-content {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 210, 255, 0.1);
+            border-top: 3px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Background Animation */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .glow-circle {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.08) 0%, transparent 70%);
+            filter: blur(80px);
+            animation: float 20s infinite alternate;
+        }
+        .glow-1 { top: -10%; left: -10%; }
+        .glow-2 { bottom: -10%; right: -10%; animation-delay: -5s; }
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 50px); }
+        }
+
+        /* Glassmorphism Utility */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+        nav.scrolled {
+            padding: 12px 0;
+            background: rgba(5, 8, 22, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .nav-btn {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.2);
+        }
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 100px;
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to bottom, #fff 40%, #a0aec0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 210, 255, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid var(--glass-border);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 60px 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+        .stat-card {
+            padding: 40px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+
+        /* Sections General */
+        section {
+            padding: 100px 0;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Why Join Section */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            padding: 40px;
+            transition: var(--transition);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 210, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 210, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 24px;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Categories Section */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .cat-card {
+            position: relative;
+            padding: 32px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .cat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+        .cat-card:hover::before {
+            opacity: 0.05;
+        }
+        .cat-card:hover {
+            transform: scale(1.02);
+        }
+
+        /* Community Section */
+        .community {
+            background: radial-gradient(circle at center, rgba(0, 210, 255, 0.05) 0%, transparent 70%);
+        }
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .social-proof-card {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1a202c;
+        }
+        .user-details h4 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        .user-details span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+        }
+        .cta-card {
+            padding: 80px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1) 0%, rgba(58, 123, 213, 0.1) 100%);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-card h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 24px;
+        }
+        .cta-card p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        .footer-brand p {
+            color: var(--text-secondary);
+            margin: 20px 0;
+            max-width: 300px;
+        }
+        .footer-links h4 {
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        .social-icons {
+            display: flex;
+            gap: 16px;
+        }
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Floating Button */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #229ED9;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(34, 158, 217, 0.4);
+            z-index: 900;
+            transition: var(--transition);
+        }
+        .floating-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        /* Back to Top */
+        #backToTop {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            z-index: 900;
+            transition: var(--transition);
+        }
+        #backToTop.visible {
+            display: flex;
+        }
+        #backToTop:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-brand {
+                grid-column: span 2;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero {
+                padding: 140px 0 60px;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .footer-brand {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content"></div>
+    </div>
+
+    <!-- Background Glow -->
+    <div class="bg-glow">
+        <div class="glow-circle glow-1"></div>
+        <div class="glow-circle glow-2"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">AV</div>
+                    <span>Ahtasham Vault</span>
+                </a>
+                <a href="https://t.me/pw_pipro8051" target="_blank" rel="noopener noreferrer" class="nav-btn">Open Vault</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero container">
+        <div class="reveal">
+            <span class="badge">Free Resources • Notes • Tools • APKs</span>
+            <h1>The Ultimate<br>Digital Vault</h1>
+            <p class="hero-desc">Access a curated ecosystem of premium digital assets, educational materials, and productivity tools designed for the modern creator.</p>
+            <div class="hero-btns">
+                <a href="https://t.me/pw_pipro8051" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.45-.42-1.39-.89.03-.24.37-.49 1.02-.74 4-1.74 6.67-2.88 8-3.43 3.81-1.58 4.6-1.85 5.11-1.86.11 0 .37.03.53.17.14.12.18.28.19.39.01.06.02.18.02.3z"/></svg>
+                    Open Telegram Vault
+                </a>
+                <a href="https://www.youtube.com/@Ahtasham-vault" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">YouTube</a>
+                <a href="https://www.instagram.com/ahtashamvault" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Instagram</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="stats container">
+        <div class="stats-grid reveal">
+            <div class="stat-card glass">
+                <span class="stat-number" data-target="500">0</span>
+                <span class="stat-label">Resources</span>
+            </div>
+            <div class="stat-card glass">
+                <span class="stat-number" data-target="50">0</span>
+                <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-card glass">
+                <span class="stat-number" data-target="10000">0</span>
+                <span class="stat-label">Community</span>
+            </div>
+            <div class="stat-card glass">
+                <span class="stat-number" data-target="24">0</span>
+                <span class="stat-label">Support</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Join Section -->
+    <section class="why-join container">
+        <div class="section-header reveal">
+            <h2 class="section-title">Why Join Our Vault?</h2>
+            <p class="section-subtitle">We provide high-quality resources that help you learn, build, and grow faster in the digital space.</p>
+        </div>
+        <div class="why-grid">
+            <div class="feature-card glass reveal">
+                <div class="feature-icon">📦</div>
+                <h3>APK Collection</h3>
+                <p>Access premium and modified APKs for your productivity and entertainment needs safely.</p>
+            </div>
+            <div class="feature-card glass reveal">
+                <div class="feature-icon">📚</div>
+                <h3>Notes & PDFs</h3>
+                <p>Comprehensive study materials and guides curated for effective learning and reference.</p>
+            </div>
+            <div class="feature-card glass reveal">
+                <div class="feature-icon">🛠️</div>
+                <h3>Tools & Resources</h3>
+                <p>A collection of useful digital tools to streamline your workflow and boost efficiency.</p>
+            </div>
+            <div class="feature-card glass reveal">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Access</h3>
+                <p>No more searching. Everything you need is organized and ready for instant download.</p>
+            </div>
+            <div class="feature-card glass reveal">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile First</h3>
+                <p>Optimized for mobile users, ensuring you can access resources anytime, anywhere.</p>
+            </div>
+            <div class="feature-card glass reveal">
+                <div class="feature-icon">📈</div>
+                <h3>Growing Library</h3>
+                <p>We update our vault regularly with the latest resources and community requests.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories Section -->
+    <section class="categories container">
+        <div class="section-header reveal">
+            <h2 class="section-title">Explore Categories</h2>
+            <p class="section-subtitle">Browse through our organized collections to find exactly what you're looking for.</p>
+        </div>
+        <div class="categories-grid">
+            <div class="cat-card glass reveal">
+                <h3>Study Material</h3>
+                <p>Notes, exam guides, and educational PDFs.</p>
+            </div>
+            <div class="cat-card glass reveal">
+                <h3>Productivity Tools</h3>
+                <p>Apps and scripts to manage your time better.</p>
+            </div>
+            <div class="cat-card glass reveal">
+                <h3>Creator Resources</h3>
+                <p>Assets for designers, editors, and creators.</p>
+            </div>
+            <div class="cat-card glass reveal">
+                <h3>AI Resources</h3>
+                <p>Prompts, tools, and guides for AI mastery.</p>
+            </div>
+            <div class="cat-card glass reveal">
+                <h3>APK Collection</h3>
+                <p>Premium apps and utility tools for Android.</p>
+            </div>
+            <div class="cat-card glass reveal">
+                <h3>Learning Guides</h3>
+                <p>Step-by-step tutorials for various skills.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community container">
+        <div class="section-header reveal">
+            <h2 class="section-title">Trusted by Thousands</h2>
+            <p class="section-subtitle">Join a community of like-minded individuals sharing knowledge and resources every day.</p>
+        </div>
+        <div class="community-grid">
+            <div class="social-proof-card glass reveal">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <h4>Community Member</h4>
+                        <span>Active User</span>
+                    </div>
+                </div>
+                <p>"The best place for finding premium notes and tools. The Telegram channel is super active and helpful!"</p>
+            </div>
+            <div class="social-proof-card glass reveal">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <h4>Digital Creator</h4>
+                        <span>Resource Hunter</span>
+                    </div>
+                </div>
+                <p>"Ahtasham Vault has saved me hours of searching for the right tools. Highly recommended for creators."</p>
+            </div>
+            <div class="social-proof-card glass reveal">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <h4>Student</h4>
+                        <span>Premium Member</span>
+                    </div>
+                </div>
+                <p>"The study materials are top-notch. Everything is well-organized and easy to access on my phone."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section container">
+        <div class="cta-card glass reveal">
+            <h2>Ready to unlock the vault?</h2>
+            <p>Join our Telegram community today and get instant access to hundreds of premium resources for free.</p>
+            <div class="hero-btns">
+                <a href="https://t.me/pw_pipro8051" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Join Telegram Now</a>
+                <a href="https://www.youtube.com/@Ahtasham-vault" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Subscribe on YouTube</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">AV</div>
+                        <span>Ahtasham Vault</span>
+                    </a>
+                    <p>Empowering creators and students with the best digital resources and tools in one premium vault.</p>
+                    <div class="social-icons">
+                        <a href="https://t.me/pw_pipro8051" target="_blank" rel="noopener noreferrer" class="social-icon">TG</a>
+                        <a href="https://www.youtube.com/@Ahtasham-vault" target="_blank" rel="noopener noreferrer" class="social-icon">YT</a>
+                        <a href="https://www.instagram.com/ahtashamvault" target="_blank" rel="noopener noreferrer" class="social-icon">IG</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="https://t.me/pw_pipro8051" target="_blank" rel="noopener noreferrer">Telegram Vault</a></li>
+                        <li><a href="https://www.youtube.com/@Ahtasham-vault" target="_blank" rel="noopener noreferrer">YouTube Channel</a></li>
+                        <li><a href="https://www.instagram.com/ahtashamvault" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Ahtasham Vault. Download. Learn. Build.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Telegram Button -->
+    <a href="https://t.me/pw_pipro8051" target="_blank" rel="noopener noreferrer" class="floating-btn">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.45-.42-1.39-.89.03-.24.37-.49 1.02-.74 4-1.74 6.67-2.88 8-3.43 3.81-1.58 4.6-1.85 5.11-1.86.11 0 .37.03.53.17.14.12.18.28.19.39.01.06.02.18.02.3z"/></svg>
+    </a>
+
+    <!-- Back to Top -->
+    <div id="backToTop">↑</div>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Back to Top
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Reveal Animations
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        };
+        window.addEventListener('scroll', reveal);
+        // Initial check
+        reveal();
+
+        // Counter Animation
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.stat-number');
+            const speed = 200;
+
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target + (target >= 1000 ? '+' : '');
+                    }
+                };
+                
+                // Trigger when in view
+                const observer = new IntersectionObserver((entries) => {
+                    if(entries[0].isIntersecting) {
+                        updateCount();
+                        observer.unobserve(counter);
+                    }
+                }, { threshold: 1 });
+                
+                observer.observe(counter);
+            });
+        };
+        animateCounters();
+
+        // Mouse Move Glow Effect
+        document.addEventListener('mousemove', (e) => {
+            const glow1 = document.querySelector('.glow-1');
+            const glow2 = document.querySelector('.glow-2');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            glow1.style.transform = `translate(${x * 50}px, ${y * 50}px)`;
+            glow2.style.transform = `translate(${-x * 50}px, ${-y * 50}px)`;
+        });
+    </script>
+</body>
+</html>
